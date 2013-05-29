@@ -2,11 +2,6 @@
 	padding-left: 150px;
 }
 
-span {
-	font-size: 30px;
-	padding-bottom: 50px;
-}
-
 .btn-custom {
   background-color: hsl(201, 100%, 30%) !important;
   background-repeat: repeat-x;
@@ -22,6 +17,10 @@ span {
   color: #fff !important;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.33);
   -webkit-font-smoothing: antialiased;
+}
+
+.indent {
+  padding-left: 20px;
 }
 
 /*
