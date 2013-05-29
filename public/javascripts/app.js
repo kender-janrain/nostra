@@ -1,5 +1,7 @@
-function ArtistController($scope, $http) {
-	$scope.payload = [];
+function ArtistController($scope, $http, $httpProvider) {
+	$httpProvider.defaults.headers.post = { 'Content-Type': 'application/x-www-form-urlencoded' };
+
+  $scope.payload = [];
 
   $scope.artists = [
 						         { name: "Rihanna", checked: false },
@@ -21,6 +23,24 @@ function ArtistController($scope, $http) {
     }).error(function() {
       console.log('ERROR');
       console.log($scope.payload);
-    });
+    }).then();
 	}
+}
+
+function GuessController($scope, $http) {
+  $scope.returnData = { age: 'Joe Bloe', gender: 'Male' };
+
+  $scope.fetch = function() {
+    $http({
+      method: 'GET',
+      url: '/guess'
+    }).success(function(data) {
+      console.log('SUCCESS');
+      console.log(data);
+      $scope.returnData = data;      
+    }).error(function(data) {
+      console.log('ERROR');
+      console.log(data);
+    })
+  }
 }
