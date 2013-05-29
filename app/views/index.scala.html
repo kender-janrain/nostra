@@ -1,7 +1,33 @@
-@(message: String)
+@main("Title") {
+<div class="container-fluid fill">
+	<div id="header" class="hero-unit">
+	  	<h1 class="hero-unit">Welcome to Guessr.io</h1>
+	  	<p class="lead">Hello!</p>
 
-@main("Welcome to Play 2.1") {
-    
-    @play20.welcome(message)
-    
+	  	<!-- <img id="blender" src="@routes.Assets.at("images/image.png")"> -->
+	</div>
+	
+	<div class="row-fluid">
+
+	<div id="main">
+		<form method="POST" action="/guess">
+			<fieldset>
+				<h1>Select your artists</h1>
+				<span><input type="checkbox">   Artist 1<br /></span>
+				<span><input type="checkbox">   Artist 2<br /></span>
+				<span><input type="checkbox">   Artist 3<br /></span>
+				<span><input type="checkbox">   Artist 4<br /></span>
+				<span><input type="checkbox">   Artist 5<br /></span>
+				<br />
+				<button type="submit" class="btn btn-custom">Submit</button>
+			</fieldset>
+		</form>
+	</div>
+
+	</div>
+
+	<div>
+		<h1>Hello!</h1>
+	</div>
+</div>
 }
