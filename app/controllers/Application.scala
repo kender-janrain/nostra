@@ -6,6 +6,8 @@ import model.Gender
 import scala.concurrent.Future, Future._
 
 object Application extends Controller {
+  import play.api.libs.concurrent.Execution.Implicits._
+
   private def guessr(fields: Map[String, String]): Future[Map[String, String]] = {
     import sys.process._
     successful { Map.empty }
