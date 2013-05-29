@@ -1,33 +1,23 @@
 @main("Title") {
-<div class="container-fluid fill">
-	<div id="header" class="hero-unit">
-	  	<h1 class="hero-unit">Welcome to Guessr.io</h1>
-	  	<p class="lead">Hello!</p>
-
-	  	<!-- <img id="blender" src="@routes.Assets.at("images/image.png")"> -->
-	</div>
+<div class="container">
+	<h1 class="hero-unit">Welcome to Guessr.io</h1>
 	
-	<div class="row-fluid">
+	<div class="row">
 
-	<div id="main">
-		<form method="POST" action="/guess">
-			<fieldset>
-				<h1>Select your artists</h1>
-				<span><input type="checkbox">   Artist 1<br /></span>
-				<span><input type="checkbox">   Artist 2<br /></span>
-				<span><input type="checkbox">   Artist 3<br /></span>
-				<span><input type="checkbox">   Artist 4<br /></span>
-				<span><input type="checkbox">   Artist 5<br /></span>
-				<br />
-				<button type="submit" class="btn btn-custom">Submit</button>
-			</fieldset>
-		</form>
-	</div>
+		<div class="span6">
+			<form method="POST" action="/guess" ng-controller="ArtistController">
+				<ul class="unstyled">
+					<li ng-repeat="artist in artists">
+						<input type="checkbox" value="{{ artist.name }}"><span class="indent">{{ artist.name }}</span>
+					</li>		
+				</ul>
+				<button class="btn btn-custom" type="submit">Submit</submit>	
+			</form>
+		</div>
 
-	</div>
-
-	<div>
-		<h1>Hello!</h1>
+		<div class="span3">
+			<h1>UNDER CONSTRUCTION</h1>
+		</div>
 	</div>
 </div>
 }
