@@ -2,7 +2,7 @@
 
 cat - > $(dirname $0)/guess.out
 
-cat - <<EOF
+cat -<<EOF
 age=11
 gender=male
-EOF                                                `
+EOF

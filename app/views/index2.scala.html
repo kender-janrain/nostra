@@ -1,0 +1,32 @@
+@(profiles: List[model.Profile])
+
+@main("profiles", "/none") {
+	<html>
+		<body>
+			<div id="profile-list">
+				<form>
+				<table>
+					<tbody>
+					@for((profile, ix) ← profiles.zipWithIndex) {
+						<script>
+            var onClick_@ix = function() { $.post("/guess", "@profile.raw", function(r) { $("#profile-result").empty().html(r).append("But their actual age and gender is @profile.age and @profile.gender"); }, "text"); }
+						</script>
+						<tr>
+							<td>
+								<input type="radio" id="profile-@ix" name="profile" onclick="@{ s"onClick_$ix()"}" />
+							</td>
+							<td><label for="profile-@ix">@profile.name</label></td>
+						</tr>
+					}
+					</tbody>
+				</table>
+				</form>
+			</div>
+
+			<div id="profile-result">
+					<!-- the guess goes here -->
+			</div>
+
+		</body>
+	</html>
+}
