@@ -24,6 +24,12 @@ object Application extends Controller {
     import scala.sys.process._
     import play.api.Play.current
 
+    def opposite(gender: String) = gender.toLowerCase match {
+      case "male" ⇒ "female"
+      case "female" ⇒ "male"
+      case _ ⇒ gender
+    }
+
     val cmd = Play.configuration.getString("guess.command").getOrElse("./guess.sh")
     val cwd = Play.configuration.getString("guess.cwd").getOrElse(".")
 
@@ -37,7 +43,10 @@ object Application extends Controller {
               case Array(key, value) ⇒ key → value
             }
         }
-        output.toMap
+        (output.toMap map {
+          case (k, v) if k == "gender" ⇒ k → opposite(v)
+          case (k, v) ⇒ k → v
+        }).toMap
       }
     }
   }

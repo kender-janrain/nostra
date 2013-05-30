@@ -1,32 +1,75 @@
 @(profiles: List[model.Profile])
 
 @main("profiles", "/none") {
-	<html>
-		<body>
-			<div id="profile-list">
-				<form>
-				<table>
-					<tbody>
+	<style>
+		body, p {
+			font-size: 32px;
+			line-height: normal;
+		}
+		li {
+			margin-top: .7em;
+		  list-style: none;
+		}
+	</style>
+
+	<div class="container">
+		<div class="row">
+			<div class="span7">
+				<div id="profile-selections">
+					<script>
+						function selected(ix) {
+							$('#profile-result').empty();
+							$('#theShowButton').empty();
+							eval("show_" + ix + "()");
+						}
+					</script>
 					@for((profile, ix) ← profiles.zipWithIndex) {
 						<script>
-            var onClick_@ix = function() { $.post("/guess", "@profile.raw", function(r) { $("#profile-result").empty().html(r).append("But their actual age and gender is @profile.age and @profile.gender"); }, "text"); }
+							var show_@ix = function() {
+								console.log("showing @profile.toString")
+								var ul = $("<ul></ul>");
+								@for(a ← profile.attributes) {
+									ul.append($("<li class='bigger'></li>").text("@a"));
+								}
+
+								var showBtn = $("<button class='btn'>show</button>");
+
+								function showGuess(r) {
+									var gender;
+									if ("@profile.gender" === "F") gender = "female";
+									else gender = "male";
+
+									var actual = $("<div></div>").append($("<h2>Actual</h2>")).append("<h1>" + gender + " @profile.age</h1>");
+										$("#profile-result").empty().html(r).append(actual);
+								}
+
+								showBtn.click(function() {
+									$.post("/guess", "@profile.raw", showGuess, "text");
+								});
+
+								$("#profile-detail").empty().append(ul);
+								$("#theShowButton").empty().append(showBtn);
+							}
 						</script>
-						<tr>
-							<td>
-								<input type="radio" id="profile-@ix" name="profile" onclick="@{ s"onClick_$ix()"}" />
-							</td>
-							<td><label for="profile-@ix">@profile.name</label></td>
-						</tr>
 					}
-					</tbody>
-				</table>
-				</form>
+					<select onchange="javascript:selected(this.selectedIndex)">
+					@for((profile, ix) ← profiles.zipWithIndex) {
+						<option>@ix</option>
+					}
+					</select>
+					<span id="theShowButton"></span>
+				</div>
+
+				<div id="profile-detail" >
+
+				</div>
 			</div>
 
-			<div id="profile-result">
-					<!-- the guess goes here -->
+			<div class="span5">
+				<div id="profile-result">
+						<!-- the guess goes here -->
+				</div>
 			</div>
-
-		</body>
-	</html>
+		</div>
+	</div>
 }
