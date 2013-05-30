@@ -1,32 +1,45 @@
-function ArtistController($scope, $http, $httpProvider) {
-	$httpProvider.defaults.headers.post = { 'Content-Type': 'application/x-www-form-urlencoded' };
+$(document).ready(function() {
+  $('#janrainEngageEmbed').hide();
 
-  $scope.payload = [];
+  $('#signin').click(function() {
+    $('#janrainEngageEmbed').show();
+  });
+});
 
-  $scope.artists = [
+function UserController($scope, $http) {
+	//$httpProvider.defaults.headers.post = { 'Content-Type': 'application/x-www-form-urlencoded' };
+
+  $scope.user = {};
+  $scope.user.name = '';
+  $scope.user.artists = [
 						         { name: "Rihanna", checked: false },
 						         { name: "Nickelback", checked: false },
 						         { name: "Mötörhead", checked: false }
 	                 ];
 	$scope.submit = function() {
-    angular.forEach($scope.artists, function(artist) {
-      $scope.payload.push({ artist: artist.name, checked: artist.checked });
+    angular.forEach($scope.user.artists, function(artist) {
+      $scope.user.artists.push({ artist: artist.name, checked: artist.checked });
     });
 
-		$http({
+    var xsrf = $.param({ name: $scope.user.name, artists: $scope.user.artists });
+
+		$http({ 
       method: 'POST',
       url: '/guess',
-      data: $scope.postData
+      data: xsrf,
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).success(function() {
       console.log('SUCCESS');
-      console.log($scope.payload);
+      console.log(xsrf);
+      $scope.user = {};
     }).error(function() {
       console.log('ERROR');
-      console.log($scope.payload);
-    }).then();
+      console.log(xsrf);
+      $scope.user = {};
+    });
 	}
 }
-
+/*
 function GuessController($scope, $http) {
   $scope.returnData = { age: 'Joe Bloe', gender: 'Male' };
 
@@ -43,4 +56,4 @@ function GuessController($scope, $http) {
       console.log(data);
     })
   }
-}
+}*/
